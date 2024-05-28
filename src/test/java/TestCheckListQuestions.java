@@ -22,6 +22,7 @@ public class TestCheckListQuestions {
     public TestCheckListQuestions(String question, String answer) {
         this.question = question;
         this.answer = answer;
+
     }
 
     @Parameterized.Parameters
