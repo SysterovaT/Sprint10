@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
@@ -24,7 +26,6 @@ public class TestCheckListQuestions {
 
     @Parameterized.Parameters
     public static Object[][] getCredentials() {
-        //Сгенерируй тестовые данные (свою учётку и несколько случайных)
         return new Object[][] {
                 {"Сколько это стоит? И как оплатить?", "Сутки — 400 рублей. Оплата курьеру — наличными или картой."},
                 {"Хочу сразу несколько самокатов! Так можно?", "Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, можете просто сделать несколько заказов — один за другим."},
@@ -36,10 +37,12 @@ public class TestCheckListQuestions {
                 {"Я жизу за МКАДом, привезёте?", "Да, обязательно. Всем самокатов! И Москве, и Московской области."},
         };
     }
-
+    
     @Before
     public void startUp() {
-        WebDriverManager.chromedriver().setup();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
+        driver = new ChromeDriver(options);
     }
 
     @After
@@ -49,11 +52,6 @@ public class TestCheckListQuestions {
 
     @Test
     public void checkQuestionAnswer() {
-        FirefoxOptions options = new FirefoxOptions();
-        options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
-//        driver = new ChromeDriver(options);
-        driver = new FirefoxDriver(options);
-
         driver.get("https://qa-scooter.praktikum-services.ru/");
 
         HomeFourPartObj homeFourPartObj = new HomeFourPartObj(driver);
